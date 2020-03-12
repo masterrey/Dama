@@ -17,6 +17,7 @@ public class PlayerPiece : Piece
             if (Input.GetMouseButtonDown(0))
             {
                 bool validmove = false;
+                myenable = false;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(ray,out RaycastHit hit, 100))
                 {
@@ -46,7 +47,6 @@ public class PlayerPiece : Piece
                     }
                     if (validmove)
                     {
-                        myenable = false;
                         token = false;
                     }
                 }
@@ -55,7 +55,7 @@ public class PlayerPiece : Piece
     }
     void OnMouseUp()
     {
-        if(token)
+      if(token)
         myenable = true;
     }
 }
