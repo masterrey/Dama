@@ -39,6 +39,18 @@ public class Piece : MonoBehaviour
 
         if (Physics.Raycast(transform.position,direction, out RaycastHit hit, 2))
         {
+            
+            Object otherType = hit.collider.gameObject.GetComponent<Piece>();
+            Object myType = GetComponent<Piece>();
+
+            if (otherType.GetType()== myType.GetType())
+            {
+                print("Amigo ");
+            }
+            else
+            {
+                print("Quero te mata!");
+            }
             return false;
            
         }
