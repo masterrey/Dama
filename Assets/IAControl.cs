@@ -29,7 +29,15 @@ public class IAControl : MonoBehaviour
         if (!wait&&!Piece.token)
         {
             wait = true;
-            iAPieces[Random.Range(0, iAPieces.Length)].EnableIA(iaCall);
+            int r = Random.Range(0, iAPieces.Length);
+            if (iAPieces[r] == null)
+            {
+                wait = false;
+                return;
+            }
+
+           iAPieces[r].EnableIA(iaCall);
+
         }
 
         if (Piece.token)

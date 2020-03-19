@@ -5,12 +5,39 @@ using UnityEngine;
 public class Piece : MonoBehaviour
 {
     public enum directions {UL,UR,DL,DR};
-    protected bool myenable = false;
+    private bool myenable = false;
     public static bool token;
-    void Start()
-    {
-        
+    Color oldcolor;
+    Material mymaterial;
+
+    protected bool Myenable {
+        //get => myenable; 
+        //set => myenable = value;
+        get
+        {
+            return myenable;
+        }
+        set
+        {
+            myenable = value;
+            if (myenable)
+            {
+                oldcolor = GetComponent<Renderer>().material.color;
+                GetComponent<Renderer>().sharedMaterial.color = oldcolor+Color.white/2;
+            }
+            else
+            {
+                GetComponent<Renderer>().sharedMaterial.color = oldcolor;
+            }
+        }
+    
     }
+
+   protected void Selected()
+    {
+
+    }
+
 
     public bool MovePart(directions d)
     {
@@ -37,31 +64,47 @@ public class Piece : MonoBehaviour
         }
         newposition = transform.position + direction;
 
-        if (Physics.Raycast(transform.position,direction, out RaycastHit hit, 2))
+        if (CheckBoard(newposition))
         {
-            
-            Object otherType = hit.collider.gameObject.GetComponent<Piece>();
-            Object myType = GetComponent<Piece>();
-
-            if (otherType.GetType()== myType.GetType())
+            if (Physics.Raycast(transform.position, direction, out RaycastHit hit, 2))
             {
-                print("Amigo ");
-            }
-            else
-            {
-                print("Quero te mata!");
-            }
-            return false;
-           
-        }
 
+                Object otherType = hit.collider.gameObject.GetComponent<Piece>();
+                Object myType = GetComponent<Piece>();
 
-        if (newposition.x>=0&& newposition.x<=7&& newposition.z>=0&& newposition.z<= 7)
-        {
+                if (otherType.GetType() == myType.GetType())
+                {
+                    print("Amigo ");
+                    return false;
+                }
+                else
+                {
+                    print("Quero te mata!");
+                    newposition += direction;
+                    if (CheckBoard(newposition))
+                    {
+                        Destroy(hit.collider.gameObject);
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
             transform.position = newposition;
             return true;
         }
+
         return false;
 
+    }
+
+    bool CheckBoard(Vector3 newpos)
+    {
+        if (newpos.x >= 0 && newpos.x <= 7 && newpos.z >= 0 && newpos.z <= 7)
+        {
+            return true;
+        }
+        return false;
     }
 }

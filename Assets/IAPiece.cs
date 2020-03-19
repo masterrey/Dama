@@ -12,17 +12,17 @@ public class IAPiece : Piece
 
     void TryIA()
     {
-        if (myenable && !token)
+        if (Myenable && !token)
         {
             StartCoroutine("MoveIA");
-            myenable = false;
+            Myenable = false;
         }
     }
 
     public void EnableIA(IAControl.IaCallBack iaCall)
     {
         iaCallBack = iaCall;
-        myenable = true;
+        Myenable = true;
     }
     void Update()
     {
@@ -40,7 +40,7 @@ public class IAPiece : Piece
         }
         if (counter <= 0)
         {
-            myenable = false;
+            Myenable = false;
             iaCallBack(false);
         }
         else

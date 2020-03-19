@@ -12,12 +12,12 @@ public class PlayerPiece : Piece
  
     void Update()
     {
-        if (myenable)
+        if (Myenable)
         {
             if (Input.GetMouseButtonDown(0))
             {
                 bool validmove = false;
-                myenable = false;
+                Myenable = false;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(ray,out RaycastHit hit, 100))
                 {
@@ -56,6 +56,6 @@ public class PlayerPiece : Piece
     void OnMouseUp()
     {
       if(token)
-        myenable = true;
+        Myenable = true;
     }
 }
